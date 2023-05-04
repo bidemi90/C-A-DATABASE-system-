@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="bootstrap-5.2.3-dist/css/bootstrap.min.css">
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-success text-light">
+        <div class="container-fluid">
+            <a class="navbar-brand fs-4 fw-bold text-light btn btn-success btn-outline-success" href="#">CHILD ABUSE DATABASE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link  text-light btn btn-success btn-outline-success" aria-current="page" href="dashboard.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light btn btn-success btn-outline-success" href="addcase.html">ADD CASE</a>
+                    </li>
+                    
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-success btn-outline-light" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="card w-75 mx-auto my-2 p-4 bg-success text-light">
+        <h2 m-2>Register Case</h2>
+        <form class="bg-success text-light">
+            <div class="form-group m-2">
+                <label class="m-2" for="caseID">Case ID</label>
+                <input type="text" class="form-control m-2" id="caseID" placeholder="Enter Case ID">
+            </div>
+            <div class="form-group  m-2">
+                <label class="m-2" for="dateOfIncident">Date of Incident</label>
+                <input type="date" class="form-control m-2" id="dateOfIncident">
+            </div>
+            <div class="form-group m-2">
+                <label class="m-2" for="location">Location</label>
+                <input type="text" class="form-control  m-2" id="location" placeholder="Enter Location">
+            </div>
+            <div class="form-group m-2">
+                <label class="m-2" for="victimInfo">Victim Information</label>
+                <input type="text" class="form-control  m-2" id="victimInfo" placeholder="Enter Victim Information">
+            </div>
+            <div class="form-group m-2">
+                <label class="m-2" for="perpetratorInfo">Perpetrator Information</label>
+                <input type="text" class="form-control  m-2" id="perpetratorInfo"
+                    placeholder="Enter Perpetrator Information">
+            </div>
+            <div class="form-group m-2">
+                <label class="m-2" for="typeOfAbuse">Type of Abuse</label>
+                <select class="form-control  m-2" id="typeOfAbuse">
+                    <option value="">Select Type of Abuse</option>
+                    <option value="physical">Physical Abuse</option>
+                    <option value="sexual">Sexual Abuse</option>
+                    <option value="emotional">Emotional Abuse</option>
+                    <option value="neglect">Neglect</option>
+                </select>
+            </div>
+            <div class="form-group m-2">
+                <label class="m-2" for="severity">Severity</label>
+                <select class="form-control  m-2" id="severity">
+                    <option value="">Select Severity</option>
+                    <option value="mild">Mild</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="severe">Severe</option>
+                </select>
+            </div>
+            <div class="form-group m-2">
+                <label class="m-2" for="reportingAgency">Reporting Agency</label>
+                <input type="text" class="form-control  m-2" id="reportingAgency" placeholder="Enter Reporting Agency">
+            </div>
+            <div class="form-group m-2">
+                <label class="m-2" for="status">Status</label>
+                <input type="text" class="form-control  m-2" id="status" placeholder="Enter Status">
+            </div>
+            <div class="form-group m-2">
+                <label class="m-2" for="legalProceedings">Legal Proceedings</label>
+                <input type="text" class="form-control m-2" id="legalProceedings" placeholder="Enter Legal Proceedings">
+            </div>
+            <div class="form-group m-2">
+                <label class="m-2" for="notes">Notes</label>
+                <textarea class="  m-2 form-control" id="notes" rows="3" placeholder="Enter Notes"></textarea>
+            </div>
+            <div class="form-group m-2">
+                <label class="m-2" for="followUpActions">Follow-up Actions</label>
+                <textarea class="form-control  m-2" id="followUpActions" rows="3"
+                    placeholder="Enter Follow-up Actions"></textarea>
+            </div>
+            <button type="submit" onclick="addcase(event)" class="btn btn-success btn-outline-light">Submit</button>
+        </form>
+
+    </div>
+</body>
+
+</html>
+
+
+<script>
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBnbbiPGg-xzTzKQDML8MpxZ0meMQzc7Q4",
+        authDomain: "c-a-m-system.firebaseapp.com",
+        projectId: "c-a-m-system",
+        storageBucket: "c-a-m-system.appspot.com",
+        messagingSenderId: "901051881204",
+        appId: "1:901051881204:web:1ea5d1e7714d1a11fc70a1"
+    };
+
+    // Initialize Firebase
+    // const app = firebase.initializeApp(firebaseConfig);
+    // const db = firebase.firestore();
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+</script>
+<script>
+    function addcase(ev) {
+        ev.preventDefault();
+        console.log({
+            caseID: document.getElementById("caseID").value,
+            location: document.getElementById("location").value,
+            victimInfo: document.getElementById("victimInfo").value,
+            perpetratorInfo: document.getElementById("perpetratorInfo").value,
+            typeOfAbuse: document.getElementById("typeOfAbuse").value,
+            severity: document.getElementById("severity").value,
+            reportingAgency: document.getElementById("reportingAgency").value,
+            status: document.getElementById("status").value,
+            legalProceedings: document.getElementById("legalProceedings").value,
+            notes: document.getElementById("notes").value,
+            followUpActions: document.getElementById("followUpActions").value,
+            dateOfIncident: document.getElementById("dateOfIncident").value
+        });
+
+        if (
+            document.getElementById("caseID").value == "",
+            document.getElementById("location").value == "",
+            document.getElementById("victimInfo").value == "",
+            document.getElementById("perpetratorInfo").value == "",
+            document.getElementById("typeOfAbuse").value == "",
+            document.getElementById("severity").value == "",
+            document.getElementById("reportingAgency").value == "",
+            document.getElementById("status").value == "",
+            document.getElementById("legalProceedings").value == "",
+            document.getElementById("notes").value == "",
+            document.getElementById("followUpActions").value == "",
+            document.getElementById("dateOfIncident").value == ""
+        ) {
+            alert("fill all input ")
+        } else {
+            db.collection("data").doc().set({
+                caseID: document.getElementById("caseID").value,
+                location: document.getElementById("location").value,
+                victimInfo: document.getElementById("victimInfo").value,
+                perpetratorInfo: document.getElementById("perpetratorInfo").value,
+                typeOfAbuse: document.getElementById("typeOfAbuse").value,
+                severity: document.getElementById("severity").value,
+                reportingAgency: document.getElementById("reportingAgency").value,
+                status: document.getElementById("status").value,
+                legalProceedings: document.getElementById("legalProceedings").value,
+                notes: document.getElementById("notes").value,
+                followUpActions: document.getElementById("followUpActions").value,
+                dateOfIncident: document.getElementById("dateOfIncident").value
+            })
+                .then(() => {
+                    console.log("Document successfully written!");
+                    alert("Document successfully written!");
+                    location.href = "dashboard.html"
+                })
+                .catch((error) => {
+                    console.error("Error writing document: ", error);
+                    alert("Error writing document: ", error);
+                });
+        }
+
+    }
+
+</script>
